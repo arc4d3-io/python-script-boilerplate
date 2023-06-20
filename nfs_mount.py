@@ -6,8 +6,8 @@ import configparser
 
 class NFSScript(CustomScript):
 
-    def __init__(self, config_filename):
-        super().__init__(description="Python script to mount NFS directories")
+    def __init__(self, config_filename, log_file="nfs_mount.log"):
+        super().__init__(description="Python script to mount NFS directories",log_file=log_file)
 
         self.config_filename  = config_filename
         self.remote_dirs = self.get_remote_dirs()
@@ -16,7 +16,7 @@ class NFSScript(CustomScript):
         with open(self.config_filename, 'r') as config_file:
             config = configparser.ConfigParser()
             config.read_file(config_file)
-            return [RemoteDir(config[section]) for section in config.sections()]
+            return [RemoteDir(config[section], log_file=self.log_file) for section in config.sections()]
 
     def run_script(self):
         # Iterate over the list of remote directories

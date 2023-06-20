@@ -7,11 +7,12 @@ import time
 
 class CustomScript:
 
-    def __init__(self, description="Custom Python script", dryrun=False, verbose=False, logger=None):
+    def __init__(self, description="Custom Python script", dryrun=False, verbose=False, logger=None, log_file='custom_script.log'):
         self.parser = argparse.ArgumentParser(description=description)
         self.dryrun = dryrun
         self.verbose = verbose
         self.start_time = time.time()
+        self.log_file = log_file
         
         # Logging configuration
         logging.basicConfig(level=logging.DEBUG if verbose else logging.INFO,
@@ -22,7 +23,7 @@ class CustomScript:
         self.parser.add_argument('-d', '--dryrun', action='store_true', help="Run script in dryrun mode.")
         self.parser.add_argument('-v', '--verbose', action='store_true', help="Increase output verbosity.")
 
-        self.logger = self._configure_logger(logger)
+        self.logger = self._configure_logger(logger, log_file)
 
     def _configure_logger(self, logger=None, log_file='custom_script.log'):
         if logger is None:
