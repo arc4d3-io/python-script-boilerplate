@@ -8,7 +8,7 @@ class RemoteDir:
         self.host = config_section['host']
         self.src = config_section['src']
         self.target = config_section['target']
-        self.readonly = config_section['readonly']
+        self.readonly = config_section.getboolean('readonly')
         self.verbose = verbose
         
 
